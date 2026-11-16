@@ -4,21 +4,26 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out source code'
+                echo 'Source code checked out from GitHub'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'python3 --version'
-                sh 'python3 -m compileall -q .'
+                sh '''
+                    python3 --version
+                    python3 -m compileall -q .
+                    python3 -m venv .venv
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                sh 'python3 -m pip install -r requirements.txt'
-                sh 'python3 -m pytest -v'
+                sh '''
+                    .venv/bin/pip install -r requirements.txt
+                    .venv/bin/python -m pytest -v
+                '''
             }
         }
 
