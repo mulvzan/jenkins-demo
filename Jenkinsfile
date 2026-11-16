@@ -26,7 +26,17 @@ pipeline {
                 '''
             }
         }
-
+        stage('Docker Build') {
+            steps {
+                sh '''
+                    docker build \
+                        -t jenkins-demo:${BUILD_NUMBER} \
+                        -t jenkins-demo:latest .
+                    
+                    docker images jenkins-demo
+                '''
+            }
+        }
         stage('Complete') {
             steps {
                 echo 'CI Pipeline completed successfully!'
