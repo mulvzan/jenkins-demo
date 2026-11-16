@@ -37,6 +37,15 @@ pipeline {
                 '''
             }
         }
+        stage('Docker Run') {
+            steps {
+                sh '''
+                    docker run --rm jenkins-demo:${BUILD_NUMBER}
+                '''
+            }
+        }
+        
+        
         stage('Complete') {
             steps {
                 echo 'CI Pipeline completed successfully!'
